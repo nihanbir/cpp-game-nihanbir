@@ -2,13 +2,13 @@
 #include <cstdio>
 #include <SDL.h>
 
-bool Window::init(int width, int height)
+Window::Window(int width, int height) : success{}
 {
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO))
 	{
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-		return false;
+		return;
 	}
 
 	//Create window 
@@ -16,11 +16,11 @@ bool Window::init(int width, int height)
 	if (!gWindow)
 	{
 		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-		return false;
+		return;
 	}
 	//Get window surface
 	gScreenSurface = SDL_GetWindowSurface(gWindow);
-	return true;
+	success = false;
 }
 
 Window::~Window() {
