@@ -1,18 +1,21 @@
-#include "LButton.h"
+#include "Door.h"
 
-LButton::LButton()
+Door::Door(int width, int height)
 {
 	mPosition.x = 14;
 	mPosition.y = 84;
+
+	this->width = width;
+	this->height = height;
 }
 
-void LButton::setPosition(int x, int y)
+void Door::setPosition(int x, int y)
 {
 	mPosition.x = x;
 	mPosition.y = y;
 }
 
-bool LButton::isClicked(int width, int height)
+bool Door::isClicked()
 {
 	//Get mouse position
 	int x, y;
@@ -27,4 +30,3 @@ bool LButton::isClicked(int width, int height)
 	else if (y > mPosition.y + height) return false;
 	return true;
 }
-
