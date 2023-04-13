@@ -24,4 +24,3 @@ private:
 	//Door position
 	SDL_Point mPosition;
 };
-

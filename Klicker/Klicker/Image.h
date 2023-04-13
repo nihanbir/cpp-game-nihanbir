@@ -1,6 +1,5 @@
 #pragma once
 #include "Door.h"
-#include <SDL.h>
 #include <cstdio>
 #include <memory>
 
@@ -21,4 +20,3 @@ public:
 	unique_ptr<Image> SetImage(Door& door);
 	SDL_Surface* getResource() {return imageSurface; }
 };
-

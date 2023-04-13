@@ -1,6 +1,4 @@
 #include "Window.h"
-#include <cstdio>
-#include <SDL.h>
 
 Window::Window(int width, int height) : success{}
 {

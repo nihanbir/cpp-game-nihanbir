@@ -1,5 +1,6 @@
 #pragma once
 #include "Image.h"
+
 class Window
 {
 	//The window we'll be rendering to
