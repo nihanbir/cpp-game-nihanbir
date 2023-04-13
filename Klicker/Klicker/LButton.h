@@ -5,6 +5,7 @@
 class LButton
 {
 public:
+	
 	//Initializes internal variables
 	LButton();
 

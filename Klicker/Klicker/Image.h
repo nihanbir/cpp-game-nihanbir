@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+
 class Image
 {
 	//The image we will load and show on the screen

@@ -1,6 +1,3 @@
-/*This source code copyrighted by Lazy Foo' Productions (2004-2022)
-and may not be redistributed without written permission.*/
-
 //Using SDL and standard IO
 #include <SDL.h>
 #include <stdio.h>
@@ -20,10 +17,11 @@ const int SCREEN_HEIGHT = 419;
 const int BUTTON_WIDTH = 88;
 const int BUTTON_HEIGHT = 335;
 
-map <SDL_EventType, const char*> surfaceMap = {
-	{SDL_MOUSEBUTTONDOWN, "img/openTheDoor.bmp"},
-};
-const char* fallbackSurface{ "img/main.bmp" };
+bool doorIsOpen{};
+
+const char* images[]{ "img/main.bmp", "img/openTheDoor.bmp", "img/GJ.bmp" };
+
+enum class GameState { DoorClosed, DoorOpen, GameOver };
 
 int main(int argc, char* args[])
 {
@@ -35,8 +33,9 @@ int main(int argc, char* args[])
 		return -1;
 	}
 
+
 	//Load media
-	auto image = make_unique<Image>( fallbackSurface );
+	auto image = make_unique<Image>(images[(int)GameState::DoorClosed]);
 	
 	LButton button{};
 	
@@ -51,10 +50,17 @@ int main(int argc, char* args[])
 				} break;
 				case SDL_MOUSEBUTTONDOWN: {
 					if (button.isClicked(BUTTON_WIDTH, BUTTON_HEIGHT)) {
-						if (auto result = surfaceMap.find((SDL_EventType)e.button.type); result != surfaceMap.end()) {
-							auto value = *result;
-							auto imageName = value.second;
-							image = make_unique<Image>(imageName);
+						if (doorIsOpen) {					
+							image = make_unique<Image>(images[(int)GameState::GameOver]);
+							if (!image->wasSuccesful())
+							{
+								printf("Failed to load media!\n");
+								return -1;
+							}
+						}
+						else { 
+							image = make_unique<Image>(images[(int)GameState::DoorOpen]);
+							doorIsOpen = true;
 							if (!image->wasSuccesful())
 							{
 								printf("Failed to load media!\n");
@@ -63,13 +69,12 @@ int main(int argc, char* args[])
 						}
 					}
 					else {
-						image = make_unique<Image>( fallbackSurface );
+						image = make_unique<Image>(images[(int)GameState::DoorClosed]);
 						if (!image->wasSuccesful())
 						{
 							printf("Failed to load media!\n");
 							return -1;
 						}
-
 					}
 				} break;
 			}
