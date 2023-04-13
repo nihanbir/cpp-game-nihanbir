@@ -8,6 +8,7 @@ and may not be redistributed without written permission.*/
 #include "Image.h"
 #include <map>
 #include <memory>
+#include "LButton.h"
 
 using namespace std;
 
@@ -18,67 +19,6 @@ const int SCREEN_HEIGHT = 419;
 //Button constants
 const int BUTTON_WIDTH = 88;
 const int BUTTON_HEIGHT = 335;
-
-//The mouse button
-class LButton
-{
-public:
-	//Initializes internal variables
-	LButton();
-
-	//Sets bottom left position
-	void setPosition(int x, int y);
-
-	//Checks if the click landed on the button
-	bool isClicked();
-
-private:
-	//Button position
-	SDL_Point mPosition;
-};
-
-LButton::LButton()
-{
-	mPosition.x = 14;
-	mPosition.y = 84;
-}
-
-void LButton::setPosition(int x, int y)
-{
-	mPosition.x = x;
-	mPosition.y = y;
-}
-
-bool LButton::isClicked()
-{
-		//Get mouse position
-		int x, y;
-		SDL_GetMouseState(&x, &y);
-		//Mouse is left of the button
-		if (x < mPosition.x)
-		{
-			return false;
-		}
-		//Mouse is right of the button
-		else if (x > mPosition.x + BUTTON_WIDTH)
-		{
-			return false;
-		}
-		//Mouse above the button
-		else if (y < mPosition.y)
-		{
-			return false;
-		}
-		//Mouse below the button
-		else if (y > mPosition.y + BUTTON_HEIGHT)
-		{
-			return false;
-		}
-		return true;
-}
-
-LButton gButtons{};
-
 
 map <SDL_EventType, const char*> surfaceMap = {
 	{SDL_MOUSEBUTTONDOWN, "img/openTheDoor.bmp"},
@@ -98,6 +38,8 @@ int main(int argc, char* args[])
 	//Load media
 	auto image = make_unique<Image>( fallbackSurface );
 	
+	LButton button{};
+	
 	//Hack to get window to stay up
 	SDL_Event e;
 	while (true) {
@@ -108,7 +50,7 @@ int main(int argc, char* args[])
 					return 0;
 				} break;
 				case SDL_MOUSEBUTTONDOWN: {
-					if (gButtons.isClicked()) {
+					if (button.isClicked(BUTTON_WIDTH, BUTTON_HEIGHT)) {
 						if (auto result = surfaceMap.find((SDL_EventType)e.button.type); result != surfaceMap.end()) {
 							auto value = *result;
 							auto imageName = value.second;
