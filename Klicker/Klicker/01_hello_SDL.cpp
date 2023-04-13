@@ -1,5 +1,4 @@
 //Using SDL and standard IO
-#include <SDL.h>
 #include <stdio.h>
 #include "Window.h"
 #include "Image.h"
@@ -34,15 +33,8 @@ int main(int argc, char* args[])
 	SDL_Event e;
 	while (true) {
 		if (SDL_PollEvent(&e)) {
-			switch (e.type) {
-
-				case SDL_QUIT: {
-					return 0;
-				} break;
-				case SDL_MOUSEBUTTONDOWN: {
-					image = image->SetImage(door);
-				} break;
-			}
+			if (e.type == SDL_QUIT) return 0;
+			else if( e.type == SDL_MOUSEBUTTONDOWN) image = image->SetImage(door);
 		}
 		window.render(image.get());
 	}
