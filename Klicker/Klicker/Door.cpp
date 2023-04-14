@@ -2,8 +2,10 @@
 
 using namespace std;
 
-Door::Door(int width, int height)
+Door::Door(int width, int height) 
 {
+	state = new ClosedDoorState;
+
 	mPosition.x = 14;
 	mPosition.y = 84;
 
@@ -33,21 +35,24 @@ bool Door::isHovered()
 	return true;
 }
 
-enum class GameState { DoorClosed, DoorOpen, GameOver };
+ClosedDoorState::ClosedDoorState() {
+	image = make_unique<Image>("img/openTheDoor.bmp");
+}
+DoorState* ClosedDoorState::update(const SDL_Event& e, Door& door, Window& window) {
+	if (e.type != SDL_MOUSEBUTTONDOWN) return this;
+	if (!door.isHovered()) return this;
+	// show image
+	window.render(image.get());
+	return new OpenDoorState();
+}
 
-unique_ptr<Image> Door::SetImage() {
-
-	if (isHovered()) {
-		if (isOpen) {
-			return make_unique<Image>(images[(int)GameState::GameOver]);
-		}
-		else {
-			isOpen = true;
-			return make_unique<Image>(images[(int)GameState::DoorOpen]);
-		}
-	}
-	else {
-		isOpen = false;
-		return make_unique<Image>(images[(int)GameState::DoorClosed]);
-	}
+OpenDoorState::OpenDoorState() {
+	image = make_unique<Image>("img/main.bmp");
+}
+DoorState* OpenDoorState::update(const SDL_Event& e, Door& door, Window& window) {
+	if (e.type != SDL_MOUSEBUTTONDOWN) return this;
+	if (!door.isHovered()) return this;
+	// show image
+	window.render(image.get());
+	return new ClosedDoorState();
 }

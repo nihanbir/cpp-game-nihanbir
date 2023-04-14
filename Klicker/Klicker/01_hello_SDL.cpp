@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "Image.h"
 #include "Door.h"
+#include <vector>
 
 using namespace std;
 
@@ -12,6 +13,8 @@ const int SCREEN_HEIGHT = 419;
 //Button constants
 const int DOOR_WIDTH = 88;
 const int DOOR_HEIGHT = 335;
+
+vector<Door*> doors{};
 
 int main(int argc, char* args[])
 {
@@ -28,14 +31,15 @@ int main(int argc, char* args[])
 	//Load media
 	auto image = make_unique<Image>("img/main.bmp");
 	
+	window.render(image.get());
+
 	//Hack to get window to stay up
 	SDL_Event e;
 	while (true) {
 		if (SDL_PollEvent(&e)) {
 			if (e.type == SDL_QUIT) return 0;
-			else if( e.type == SDL_MOUSEBUTTONDOWN) image = door.SetImage();
+			door.update(e,door,window);
 		}
-		window.render(image.get());
 	}
 	return 0;
 }
