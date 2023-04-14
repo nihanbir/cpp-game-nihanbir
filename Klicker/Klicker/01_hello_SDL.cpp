@@ -1,4 +1,3 @@
-//Using SDL and standard IO
 #include <stdio.h>
 #include "Window.h"
 #include "Image.h"
@@ -27,14 +26,14 @@ int main(int argc, char* args[])
 	Door door{DOOR_WIDTH,DOOR_HEIGHT};
 	
 	//Load media
-	auto image = make_unique<Image>();
+	auto image = make_unique<Image>("img/main.bmp");
 	
 	//Hack to get window to stay up
 	SDL_Event e;
 	while (true) {
 		if (SDL_PollEvent(&e)) {
 			if (e.type == SDL_QUIT) return 0;
-			else if( e.type == SDL_MOUSEBUTTONDOWN) image = image->SetImage(door);
+			else if( e.type == SDL_MOUSEBUTTONDOWN) image = door.SetImage();
 		}
 		window.render(image.get());
 	}

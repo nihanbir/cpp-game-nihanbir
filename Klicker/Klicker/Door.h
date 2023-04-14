@@ -1,7 +1,9 @@
 #pragma once
 #include <SDL.h>
+#include "Image.h"
+#include <memory>
 
-//The mouse button
+//The button
 class Door
 {
 public:
@@ -11,6 +13,10 @@ public:
 	int width;
 	int height;
 
+	const char* images[3]{ "img/main.bmp", "img/openTheDoor.bmp", "img/GJ.bmp" };
+
+	unique_ptr<Image> SetImage();
+
 	//Initializes internal variables
 	Door(int width, int height);
 
@@ -18,7 +24,7 @@ public:
 	void setPosition(int x, int y);
 
 	//Checks if the click landed on the door
-	bool isClicked();
+	bool isHovered();
 
 private:
 	//Door position

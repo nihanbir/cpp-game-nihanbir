@@ -1,5 +1,7 @@
 #include "Door.h"
 
+using namespace std;
+
 Door::Door(int width, int height)
 {
 	mPosition.x = 14;
@@ -15,7 +17,7 @@ void Door::setPosition(int x, int y)
 	mPosition.y = y;
 }
 
-bool Door::isClicked()
+bool Door::isHovered()
 {
 	//Get mouse position
 	int x, y;
@@ -29,4 +31,23 @@ bool Door::isClicked()
 	//Mouse below the button
 	else if (y > mPosition.y + height) return false;
 	return true;
+}
+
+enum class GameState { DoorClosed, DoorOpen, GameOver };
+
+unique_ptr<Image> Door::SetImage() {
+
+	if (isHovered()) {
+		if (isOpen) {
+			return make_unique<Image>(images[(int)GameState::GameOver]);
+		}
+		else {
+			isOpen = true;
+			return make_unique<Image>(images[(int)GameState::DoorOpen]);
+		}
+	}
+	else {
+		isOpen = false;
+		return make_unique<Image>(images[(int)GameState::DoorClosed]);
+	}
 }
