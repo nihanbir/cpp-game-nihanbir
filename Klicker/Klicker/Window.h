@@ -18,5 +18,5 @@ public:
 
 	bool wasSuccesful() { return success; }
 
-	void render(Image* image);
+	void render(Image* image, SDL_Rect* destination);
 };

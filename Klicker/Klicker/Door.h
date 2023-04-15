@@ -1,30 +1,31 @@
 #pragma once
-#include <SDL.h>
-#include "Image.h"
 #include <memory>
+#include "Image.h"
 #include "Window.h"
+#include "GlobalVariables.h"
+
+using namespace std;
 
 class Door;
 
 class DoorState {
 public:
+	Door* door;
 
 	unique_ptr<Image> image;
 
 	virtual DoorState* update(const SDL_Event& e, Door& door, Window& window) = 0;
-
-	DoorState() {};
 };
 
 class ClosedDoorState : public DoorState{
 public:
-	ClosedDoorState();
+	ClosedDoorState(Door& door);
 	DoorState* update(const SDL_Event& e, Door& door, Window& window) override;
 };
 
 class OpenDoorState : public DoorState{
 public:
-	OpenDoorState();
+	OpenDoorState(Door& door);
 	DoorState* update(const SDL_Event& e, Door& door, Window& window) override;
 
 };
@@ -32,24 +33,16 @@ public:
 //The button
 class Door : public DoorState
 {
-	//Door position
-	SDL_Point mPosition;
-
 	//Door state
 	DoorState* state;
 
-public:
+public:	
+	string images[2];
 
-	int width;
-	int height;
-
-	unique_ptr<Image> onClick();
+	SDL_Rect rect;
 
 	//Initializes internal variables
-	Door(int width, int height);
-
-	//Sets top left position
-	void setPosition(int x, int y);
+	Door(SDL_Rect doorRect, const char* closedDoorImg, const char* openDoorImg);
 
 	//Checks if the click landed on the door
 	bool isHovered();

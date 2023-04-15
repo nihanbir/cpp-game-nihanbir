@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdio>
 #include <SDL.h>
+#include <string>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ class Image
 	SDL_Surface* imageSurface{};
 	bool success;
 public:
-	Image(const char* path);
+	Image(string path);
 	~Image();
 	bool wasSuccesful() { return success; }
 	SDL_Surface* getResource() {return imageSurface; }

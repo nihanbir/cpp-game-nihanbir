@@ -1,22 +1,17 @@
 #include "Door.h"
 
+bool gameOver = false;
+
 using namespace std;
 
-Door::Door(int width, int height) 
+Door::Door(SDL_Rect doorRect, const char* closedDoorImg, const char* openDoorImg) 
 {
-	state = new ClosedDoorState;
+	images[0] = closedDoorImg;
+	images[1] = openDoorImg;
 
-	mPosition.x = 14;
-	mPosition.y = 84;
+	state = new ClosedDoorState(*this);
 
-	this->width = width;
-	this->height = height;
-}
-
-void Door::setPosition(int x, int y)
-{
-	mPosition.x = x;
-	mPosition.y = y;
+	rect = doorRect;
 }
 
 bool Door::isHovered()
@@ -25,34 +20,41 @@ bool Door::isHovered()
 	int x, y;
 	SDL_GetMouseState(&x, &y);
 	//Mouse is left of the button
-	if (x < mPosition.x) return false;
+	if (x < rect.x) return false;
 	//Mouse is right of the button
-	else if (x > mPosition.x + width) return false;
+	else if (x > rect.x + rect.w) return false;
 	//Mouse above the button
-	else if (y < mPosition.y) return false;
+	else if (y < rect.y) return false;
 	//Mouse below the button
-	else if (y > mPosition.y + height) return false;
+	else if (y > rect.y + rect.h) return false;
 	return true;
 }
 
-ClosedDoorState::ClosedDoorState() {
-	image = make_unique<Image>("img/openTheDoor.bmp");
+ClosedDoorState::ClosedDoorState(Door& door) {
+	image = make_unique<Image>(door.images[1]);
 }
 DoorState* ClosedDoorState::update(const SDL_Event& e, Door& door, Window& window) {
 	if (e.type != SDL_MOUSEBUTTONDOWN) return this;
 	if (!door.isHovered()) return this;
 	// show image
-	window.render(image.get());
-	return new OpenDoorState();
+	window.render(image.get(), &door.rect);
+	return new OpenDoorState(door);
 }
 
-OpenDoorState::OpenDoorState() {
-	image = make_unique<Image>("img/main.bmp");
+OpenDoorState::OpenDoorState(Door& door) {
+	image = make_unique<Image>(door.images[0]);
 }
 DoorState* OpenDoorState::update(const SDL_Event& e, Door& door, Window& window) {
 	if (e.type != SDL_MOUSEBUTTONDOWN) return this;
 	if (!door.isHovered()) return this;
-	// show image
-	window.render(image.get());
-	return new ClosedDoorState();
+	if (e.button.button == SDL_BUTTON_LEFT) {
+		// show image
+		window.render(image.get(), &door.rect);
+		return new ClosedDoorState(door);
+	}
+	if (e.button.button == SDL_BUTTON_RIGHT) {
+		gameOver = true;	
+		return this;
+	}
+	return this;
 }
