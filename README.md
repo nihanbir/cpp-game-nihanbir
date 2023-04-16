@@ -14,10 +14,17 @@ the game is made with SDL using;
 
     - Since every door is independent of each other, it makes sense for each door to update their own state instead of listing all the updates in the main loop. This pattern also helps making the game scalable.
 
-- Vectors for scalable collection of the doors
+- Vectors 
 
-- Runtime polymorphism to change the state of the doors ( Required by the state design pattern).
+    - For scalable collection of the doors.
 
+    - It solves the problem of making it easier to scale the amount of functional doors in the future.
+
+- Runtime polymorphism 
+
+    - To change the state of the doors.
+
+    - Required by the state design pattern.
 
 ![Screenshot 2023-04-16 164041](https://user-images.githubusercontent.com/112477158/232321346-fe2c131d-9f93-477e-988e-169d7bf66960.png)
 
