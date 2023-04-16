@@ -6,7 +6,7 @@ Simple clicker game made for a school assignment, left clicking the door to open
 
 Made with SDL using; 
 
--State and game loop design patterns
+-State and update design patterns
 
 -Vectors for scalable collection of the buttons
 
