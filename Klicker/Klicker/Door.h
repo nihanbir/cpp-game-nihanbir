@@ -3,40 +3,18 @@
 #include "Image.h"
 #include "Window.h"
 #include "GlobalVariables.h"
+#include "DoorState.h"
 
 using namespace std;
 
-class Door;
-
-class DoorState {
-public:
-	Door* door;
-
-	unique_ptr<Image> image;
-
-	virtual DoorState* update(const SDL_Event& e, Door& door, Window& window) = 0;
-};
-
-class ClosedDoorState : public DoorState{
-public:
-	ClosedDoorState(Door& door);
-	DoorState* update(const SDL_Event& e, Door& door, Window& window) override;
-};
-
-class OpenDoorState : public DoorState{
-public:
-	OpenDoorState(Door& door);
-	DoorState* update(const SDL_Event& e, Door& door, Window& window) override;
-
-};
-
 //The button
-class Door : public DoorState
+class Door
 {
-	//Door state
-	DoorState* state;
 
 public:	
+	//Door state
+	unique_ptr<DoorState> state;
+	
 	string images[2];
 
 	SDL_Rect rect;
@@ -47,10 +25,5 @@ public:
 	//Checks if the click landed on the door
 	bool isHovered();
 
-	DoorState* update(const SDL_Event& e, Door& door, Window& window) {
-		DoorState* oldState = state;
-		state = state->update(e, door, window);
-		oldState = nullptr;
-		return state;
-	}
+	void handleInput(const SDL_Event& e, Door& door, Window& window);
 };

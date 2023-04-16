@@ -16,6 +16,8 @@ public:
 	Window(int width, int height);
 	~Window();
 
+	Window(const Window& window) = delete;
+
 	bool wasSuccesful() { return success; }
 
 	void render(Image* image, SDL_Rect* destination);

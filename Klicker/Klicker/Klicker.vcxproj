@@ -168,14 +168,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="01_hello_SDL.cpp" />
+    <ClCompile Include="ClosedDoorState.cpp" />
+    <ClCompile Include="DoorState.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="OpenDoorState.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClosedDoorState.h" />
+    <ClInclude Include="DoorState.h" />
     <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Door.h" />
+    <ClInclude Include="OpenDoorState.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

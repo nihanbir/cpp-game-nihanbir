@@ -29,6 +29,10 @@ Window::~Window() {
 	//Quit SDL subsystems
 	SDL_Quit();
 }
+/*
+void Window::clear() {
+	SDL_FillRect();
+}*/
 
 void Window::render(Image* image, SDL_Rect* destination) {
 	//Apply the image
@@ -36,3 +40,9 @@ void Window::render(Image* image, SDL_Rect* destination) {
 	//Update the surface
 	SDL_UpdateWindowSurface(window);
 }
+
+/*
+void Window::present() {
+	//Update the surface
+	SDL_UpdateWindowSurface(window);
+}*/

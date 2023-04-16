@@ -10,7 +10,7 @@ const int SCREEN_HEIGHT = 419;
 SDL_Rect leftDoorRect{14,84,88,335};
 SDL_Rect rightDoorRect{240,177,24,92};
 
-vector<Door*> doors{};
+vector<unique_ptr<Door>> doors{};
 
 int main(int argc, char* args[])
 {
@@ -22,11 +22,8 @@ int main(int argc, char* args[])
 		return -1;
 	}
 
-	Door leftDoor{ leftDoorRect, "img/DoorL_Closed.bmp", "img/DoorL_Open.bmp" };
-	Door rightDoor{ rightDoorRect, "img/DoorR_Closed.bmp", "img/DoorR_Open.bmp" };
-
-	doors.push_back(&leftDoor);
-	doors.push_back(&rightDoor);
+	doors.push_back(make_unique<Door>(leftDoorRect, "img/DoorL_Closed.bmp", "img/DoorL_Open.bmp"));
+	doors.push_back(make_unique<Door>(rightDoorRect, "img/DoorR_Closed.bmp", "img/DoorR_Open.bmp"));
 
 	//Load media
 	auto image = make_unique<Image>("img/main.bmp");
@@ -36,11 +33,11 @@ int main(int argc, char* args[])
 	//Hack to get window to stay up
 	SDL_Event e;
 	while (!gameOver) {
-		if (SDL_PollEvent(&e)) {
+		while (SDL_PollEvent(&e)) {
 			if (e.type == SDL_QUIT) return 0;
-			for (Door* door : doors)
+			for (auto& door : doors)
 			{
-				door->update(e, *door, window);
+				door->handleInput(e, *door, window);
 			}
 		}
 	}
