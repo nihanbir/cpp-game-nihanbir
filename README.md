@@ -2,7 +2,9 @@
 
 # Klicker
 
-Simple clicker game made with SDL using; 
+Simple clicker game made for a school assignment, left clicking the door to open/close it and right click to leave the room.
+
+Made with SDL using; 
 
 -State and game loop design patterns
 
