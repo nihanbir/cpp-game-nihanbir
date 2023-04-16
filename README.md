@@ -4,7 +4,7 @@
 
 Simple clicker game made for a school assignment, left clicking the door to open/close it and right click to leave the room.
 
-the game is made with SDL using; 
+The game is made with SDL using; 
 
 - State design pattern 
 
