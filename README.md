@@ -4,13 +4,19 @@
 
 Simple clicker game made for a school assignment, left clicking the door to open/close it and right click to leave the room.
 
-Made with SDL using; 
+the game is made with SDL using; 
 
--State and update design patterns
+- State design pattern 
 
--Vectors for scalable collection of the buttons
+    - Each door is independent of each other and has 2 states, open and closed. This pattern helps make the game scalable if you want to increase the complexity. (eg. LockedDoorState)
 
--Runtime polymorphism to change the state of the buttons ( Required by the state design pattern).
+- Update design pattern
+
+    - Since every door is independent of each other, it makes sense for each door to update their own state instead of listing all the updates in the main loop. This pattern also helps making the game scalable.
+
+- Vectors for scalable collection of the doors
+
+- Runtime polymorphism to change the state of the doors ( Required by the state design pattern).
 
 
 ![Screenshot 2023-04-16 164041](https://user-images.githubusercontent.com/112477158/232321346-fe2c131d-9f93-477e-988e-169d7bf66960.png)
