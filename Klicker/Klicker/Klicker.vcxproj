@@ -167,7 +167,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="01_hello_SDL.cpp" />
+    <ClCompile Include="Klicker.cpp" />
     <ClCompile Include="ClosedDoorState.cpp" />
     <ClCompile Include="DoorState.cpp" />
     <ClCompile Include="Image.cpp" />
