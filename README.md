@@ -6,21 +6,24 @@ Simple clicker game made for a school assignment, left clicking the door to open
 
 The game is made with SDL using; 
 
-- State design pattern 
+## Design Patterns
+
+### - State design pattern 
 
     - Each door is independent of each other and has 2 states, open and closed. This pattern helps make the game scalable if you want to increase the complexity. (eg. LockedDoorState)
 
-- Update design pattern
+### - Update design pattern
 
     - Since every door is independent of each other, it makes sense for each door to update their own state instead of listing all the updates in the main loop. This pattern also helps making the game scalable.
 
-- Vectors 
+## Advanced C++ Features
+### - Vectors 
 
     - For scalable collection of the doors.
 
     - It solves the problem of making it easier to scale the amount of functional doors in the future.
 
-- Runtime polymorphism 
+### - Runtime polymorphism 
 
     - To change the state of the doors.
 
