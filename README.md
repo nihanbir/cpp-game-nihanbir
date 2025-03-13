@@ -1,8 +1,8 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/xhZBU6iz)
-
 # Klicker
 
-Simple clicker game made for a school assignment, left clicking the door to open/close it and right click to leave the room.
+Simple clicker game made to learn and utilize design patterns and advanced C++ features.
+
+Left clicking the door to open/close it and right click to leave the room.
 
 The game is made with SDL using; 
 
